@@ -69,19 +69,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Make image public
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Make the package public using GitHub API
-          gh api \
-            -X PATCH \
-            /orgs/${{ github.repository_owner }}/packages/container/${{ github.event.repository.name }}/visibility \
-            -f visibility=public \
-            || gh api \
-            -X PATCH \
-            /user/packages/container/${{ github.event.repository.name }}/visibility \
-            -f visibility=public
-
       - name: Image digest
         run: echo "Image pushed with digest ${{ steps.build.outputs.digest }}"
