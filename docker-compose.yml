@@ -1,0 +1,21 @@
+services:
+  hytale-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hytale-server
+    stdin_open: true
+    tty: true
+    ports:
+      - "5520:5520/udp"
+    volumes:
+      # Server files and persistent data
+      # Contains:
+      #   - Server/ (HytaleServer.jar, universe/, logs/, mods/, .cache/, config.json, etc.)
+      #   - Assets.zip
+      #   - .hytale-downloader-credentials.json (OAuth credentials)
+      - ./server:/server
+    restart: unless-stopped
+    environment:
+      - DOWNLOADER_PATH=/app/hytale-downloader-linux-amd64
+      - SERVER_PATH=/server

@@ -1,0 +1,26 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+*.md
+QUICKSTART.md
+
+# Existing binaries (we download fresh in Dockerfile)
+hytale-downloader-linux-amd64
+hytale-downloader-windows-amd64.exe
+hytale-downloader.zip
+
+# Server files (managed by volumes)
+server/
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
