@@ -1,65 +1,65 @@
 # Hytale Server Docker
 
-Container Docker per eseguire un server Hytale.
+Docker container to run a Hytale server.
 
-## Requisiti
+## Requirements
 
-- Docker e Docker Compose
-- Account Hytale con accesso al server
+- Docker and Docker Compose
+- Hytale account with server access
 
-## Installazione
+## Installation
 
-Clonare il repository e avviare il container:
+Clone the repository and start the container:
 
 ```bash
 docker-compose up -d
 ```
 
-## Configurazione
+## Configuration
 
-I file del server vengono salvati nella directory `./server`. Al primo avvio, il container scarica automaticamente i file necessari tramite hytale-downloader.
+Server files are saved in the `./server` directory. On first startup, the container automatically downloads the required files via hytale-downloader.
 
-### Autenticazione
+### Authentication
 
-Per completare il login OAuth al primo avvio:
+To complete OAuth login on first startup:
 
-1. Collegarsi al container:
+1. Attach to the container:
 ```bash
 docker attach hytale-server
 ```
 
-2. Eseguire il comando di autenticazione:
+2. Run the authentication command:
 ```
 /auth login device
 ```
 
-3. Cliccare sul link visualizzato nel browser per autorizzare l'accesso
+3. Click the displayed link in your browser to authorize access
 
-4. Uscire dal container premendo `Ctrl+P` seguito da `Ctrl+Q` (detach senza fermare il container)
+4. Detach from the container by pressing `Ctrl+P` followed by `Ctrl+Q` (detach without stopping the container)
 
-## Porte
+## Ports
 
-Il server espone la porta UDP 5520. Modificare la mappatura delle porte in `docker-compose.yml` se necessario.
+The server exposes UDP port 5520. Modify the port mapping in `docker-compose.yml` if needed.
 
-## Gestione
+## Management
 
-Avviare il server:
+Start the server:
 ```bash
 docker-compose up -d
 ```
 
-Fermare il server:
+Stop the server:
 ```bash
 docker-compose stop
 ```
 
-Visualizzare i log:
+View logs:
 ```bash
 docker-compose logs -f
 ```
 
-## Note
+## Notes
 
-- I file del server sono persistenti nella directory `./server`
-- Le credenziali OAuth vengono salvate in `./server/.hytale-downloader-credentials.json`
-- Il container si riavvia automaticamente a meno che non venga fermato manualmente
+- Server files are persistent in the `./server` directory
+- OAuth credentials are saved in `./server/.hytale-downloader-credentials.json`
+- The container automatically restarts unless manually stopped
