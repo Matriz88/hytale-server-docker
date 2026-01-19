@@ -19,3 +19,4 @@ services:
     environment:
       - DOWNLOADER_PATH=/app/hytale-downloader-linux-amd64
       - SERVER_PATH=/server
+      - FORCE_UPDATE=${FORCE_UPDATE:-}

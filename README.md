@@ -58,6 +58,34 @@ View logs:
 docker-compose logs -f
 ```
 
+## Updating Server Files
+
+To force download and update the server files to the latest version:
+
+**Option 1 - Environment variable:**
+```bash
+FORCE_UPDATE=true docker compose up
+```
+
+**Option 2 - .env file:**
+```bash
+echo "FORCE_UPDATE=true" > .env
+docker compose up
+# Remove or comment out after update
+```
+
+**Note:** The update preserves your world data (universe/), logs, and configurations. Only server binaries and assets are updated.
+
+## Updating the Downloader
+
+To update the hytale-downloader tool itself, rebuild the Docker image:
+
+```bash
+docker compose build --no-cache
+```
+
+This will download the latest version of hytale-downloader from the official source.
+
 ## Notes
 
 - Server files are persistent in the `./server` directory

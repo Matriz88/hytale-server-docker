@@ -4,24 +4,23 @@ set -e
 DOWNLOADER="$DOWNLOADER_PATH"
 SERVER_DIR="$SERVER_PATH"
 
-# Check if server files already exist
-if [ ! -d "$SERVER_DIR/Server" ] || [ ! -f "$SERVER_DIR/Assets.zip" ]; then
+if [ -n "$FORCE_UPDATE" ] && [ "$FORCE_UPDATE" = "true" ]; then
+    echo "Force update requested. Downloading latest server files..."
+    DOWNLOAD_NEEDED=true
+elif [ ! -d "$SERVER_DIR/Server" ] || [ ! -f "$SERVER_DIR/Assets.zip" ]; then
     echo "Server files not found. Starting download..."
-    
-    # Download the game files to a specific zip file
+    DOWNLOAD_NEEDED=true
+fi
+
+if [ "$DOWNLOAD_NEEDED" = "true" ]; then
     cd "$SERVER_DIR"
-    "$DOWNLOADER" -download-path "$SERVER_DIR/game.zip" -skip-update-check
+    "$DOWNLOADER" -download-path "$SERVER_DIR/game.zip"
     
-    # Extract the downloaded zip file
     if [ -f "$SERVER_DIR/game.zip" ]; then
         echo "Extracting game files..."
-        unzip -q "$SERVER_DIR/game.zip" -d "$SERVER_DIR"
+        unzip -o -q "$SERVER_DIR/game.zip" -d "$SERVER_DIR"
         rm -f "$SERVER_DIR/game.zip"
     fi
-    
-    # Debug: show what was extracted
-    echo "Contents of $SERVER_DIR after download:"
-    ls -la "$SERVER_DIR" || true
 fi
 
 # Verify server files exist
@@ -47,4 +46,4 @@ fi
 # Start the Hytale server
 echo "Starting Hytale server..."
 cd "$SERVER_DIR/Server"
-exec java -jar HytaleServer.jar --assets "$SERVER_DIR/Assets.zip"
+exec java -XX:AOTCache=HytaleServer.aot -jar HytaleServer.jar --assets "$SERVER_DIR/Assets.zip" --disable-sentry
