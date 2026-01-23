@@ -58,6 +58,30 @@ View logs:
 docker-compose logs -f
 ```
 
+## Automatic Daily Restart
+
+Configure automatic daily restart at 5:00 AM using cron:
+
+1. Make the script executable:
+   ```bash
+   chmod +x restart-server.sh
+   ```
+
+2. Add cron job (replace `/path/to/hytale-server-docker` with your actual path):
+   ```bash
+   crontab -e
+   ```
+   Add this line:
+   ```cron
+   0 5 * * * /path/to/hytale-server-docker/restart-server.sh
+   ```
+
+3. Test manually:
+   ```bash
+   ./restart-server.sh
+   cat logs/restart.log
+   ```
+
 ## Updating Server Files
 
 To force download and update the server files to the latest version:
